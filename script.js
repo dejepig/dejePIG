@@ -26,12 +26,18 @@ function openModal(modalId) {
     modal.classList.remove('modal-hidden');
 
     if (modalId.endsWith('-password-modal')) {
-        requestAnimationFrame(() => {
+        const focusPasswordInput = () => {
+            if (!modal.classList.contains('modal-visible')) return;
             const passwordInput = modal.querySelector('input[id$="-password-input"]');
             if (passwordInput) {
-                passwordInput.focus();
+                passwordInput.focus({ preventScroll: true });
                 passwordInput.select();
             }
+        };
+
+        requestAnimationFrame(() => {
+            focusPasswordInput();
+            setTimeout(focusPasswordInput, 150);
         });
     }
 }
