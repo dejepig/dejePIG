@@ -1,4 +1,4 @@
-﻿// Uchovává aktuální zobrazenou sekci
+// Uchovává aktuální zobrazenou sekci
 let currentActiveSection = 'home';
 let currentActiveSubsection = null;
 let currentActiveSubSubsection = null;
@@ -19,8 +19,27 @@ const BREADCRUMB_NAMES = {
 // --- FUNKCE PRO UI ---
 
 function openModal(modalId) {
-    document.getElementById(modalId).classList.add('modal-visible');
-    document.getElementById(modalId).classList.remove('modal-hidden');
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+
+    modal.classList.add('modal-visible');
+    modal.classList.remove('modal-hidden');
+
+    if (modalId.endsWith('-password-modal')) {
+        const focusPasswordInput = () => {
+            if (!modal.classList.contains('modal-visible')) return;
+            const passwordInput = modal.querySelector('input[id$="-password-input"]');
+            if (passwordInput) {
+                passwordInput.focus({ preventScroll: true });
+                passwordInput.select();
+            }
+        };
+
+        requestAnimationFrame(() => {
+            focusPasswordInput();
+            setTimeout(focusPasswordInput, 150);
+        });
+    }
 }
 
 function closeModal(modalId) {
