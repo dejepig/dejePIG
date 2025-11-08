@@ -11,7 +11,7 @@ const AVAILABLE_SECTIONS = ['home', 'prehistory', 'antiquity', 'medieval', 'earl
 
 // Slovník pro názvy (již není potřeba pro drobečky, ale může se hodit)
 const BREADCRUMB_NAMES = {
-    'home': 'Domů', 'prehistory': 'Pravěk', 'antiquity': 'Starověk', 'medieval': 'Středověk', 'earlymodern': 'Novověk', '19thcentury': '19. století', 'modern': 'Moderní doba',
+    'home': 'Domů', 'prehistory': 'Pravěk', 'antiquity': 'Starověk', 'medieval': 'Středověk', 'earlymodern': 'Novověk', '19thcentury': '19. století', 'modern': 'Moderní dloubak',
     'mesopotamia': 'Mezopotámie', 'egypt': 'Egypt', 'rim': 'Řím', 'greece': 'Řecko', 'renaissance': 'Renesance', 'boulevard': 'Bulvár', 'habsburg': 'Nástup Habsburků', 'newworld': 'Nový svět',
     'sumerove': 'Sumerové', 'babylon': 'Babylon', 'punskevalky': 'Punské války', 'kartago': 'Kartágo'
 };
