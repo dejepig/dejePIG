@@ -539,9 +539,10 @@ function loadVideo(element, videoId) {
     const wrapper = element.parentElement; // Cílí na div se stylem
     wrapper.innerHTML = `
         <iframe class="absolute top-0 left-0 w-full h-full" 
-                src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
+                src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0" 
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen>
         </iframe>
     `;
