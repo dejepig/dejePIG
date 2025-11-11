@@ -34,11 +34,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     messageEl.className = 'mt-4 text-sm text-center';
                 }, 2500);
             } else {
-                throw new Error('Formspree response not OK');
+                let errorDetails = 'Formspree response not OK';
+                try {
+                    const data = await response.json();
+                    if (data && data.error) {
+                        errorDetails = data.error;
+                    } else if (Array.isArray(data) && data[0] && data[0].message) {
+                        errorDetails = data[0].message;
+                    }
+                } catch (_) {
+                    // ignore JSON parse errors
+                }
+                throw new Error(`${response.status} ${response.statusText}: ${errorDetails}`);
             }
         } catch (error) {
             console.error('Contact form submission failed:', error);
-            messageEl.textContent = 'Odeslání se nezdařilo. Zkuste to prosím znovu.';
+            messageEl.textContent = `Odeslání se nezdařilo. ${error.message || 'Zkuste to prosím znovu.'}`;
             messageEl.className = 'mt-4 text-sm text-center text-red-600';
         } finally {
             submitSpinner.classList.add('hidden');
