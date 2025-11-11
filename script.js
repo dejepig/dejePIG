@@ -28,6 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 form.reset();
                 messageEl.textContent = 'Děkujeme! Ozveme se co nejdříve.';
                 messageEl.className = 'mt-4 text-sm text-center text-emerald-600';
+                setTimeout(() => {
+                    closeModal('contact-modal');
+                    messageEl.textContent = '';
+                    messageEl.className = 'mt-4 text-sm text-center';
+                }, 2500);
             } else {
                 throw new Error('Formspree response not OK');
             }
@@ -707,25 +712,4 @@ window.onload = () => {
         });
     });
     
-     document.getElementById('contact-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const submitButton = document.getElementById('submit-button');
-        const submitText = document.getElementById('submit-text');
-        const spinner = document.getElementById('submit-spinner');
-        const formMessage = document.getElementById('form-message');
-
-        submitText.textContent = 'Odesílám...';
-        spinner.classList.remove('hidden');
-        submitButton.disabled = true;
-
-        await new Promise(resolve => setTimeout(resolve, 1500));
-
-        submitText.textContent = 'Odesláno!';
-        spinner.classList.add('hidden');
-        submitButton.disabled = false;
-        formMessage.className = 'mt-4 text-sm text-center text-green-600 font-bold';
-        formMessage.textContent = 'Děkujeme! Vaše zpráva byla odeslána (simulace).';
-
-        setTimeout(() => closeModal('contact-modal'), 3000);
-    });
 };
