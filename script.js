@@ -1,3 +1,47 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    const submitBtn = document.getElementById('submit-button');
+    const submitText = document.getElementById('submit-text');
+    const submitSpinner = document.getElementById('submit-spinner');
+    const messageEl = document.getElementById('form-message');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        messageEl.textContent = '';
+        messageEl.className = 'mt-4 text-sm text-center';
+        submitSpinner.classList.remove('hidden');
+        submitText.textContent = 'Odesílám…';
+        submitBtn.disabled = true;
+
+        try {
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: { 'Accept': 'application/json' },
+                body: formData
+            });
+
+            if (response.ok) {
+                form.reset();
+                messageEl.textContent = 'Děkujeme! Ozveme se co nejdříve.';
+                messageEl.className = 'mt-4 text-sm text-center text-emerald-600';
+            } else {
+                throw new Error('Formspree response not OK');
+            }
+        } catch (error) {
+            console.error('Contact form submission failed:', error);
+            messageEl.textContent = 'Odeslání se nezdařilo. Zkuste to prosím znovu.';
+            messageEl.className = 'mt-4 text-sm text-center text-red-600';
+        } finally {
+            submitSpinner.classList.add('hidden');
+            submitText.textContent = 'Odeslat zprávu';
+            submitBtn.disabled = false;
+        }
+    });
+});
 // Uchovává aktuální zobrazenou sekci
 let currentActiveSection = 'home';
 let currentActiveSubsection = null;
