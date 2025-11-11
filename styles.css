@@ -81,6 +81,10 @@
     box-shadow: 0 16px 36px rgba(17, 24, 39, 0.45);
 }
 
+.youtube-play-button--complex { background-color: var(--color-egypt-complex); color: #1f2937; }
+.youtube-play-button--pyramid { background-color: var(--color-egypt-pyramid); color: #ffffff; }
+.youtube-play-button--punic { background-color: var(--color-punic-wars); color: #ffffff; }
+
 body {
     font-family: var(--font-body);
     background-color: var(--color-bg-primary); 
