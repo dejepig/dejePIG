@@ -11,7 +11,7 @@
     --color-prehistory: #15803d;    /* Pravěk (Zelená - Změněno) */
     --color-medieval: #0D47A1;      /* Středověk (Rich Blue) */
     --color-19thcentury: #800080;   /* 19. století (Fialová) */
-    --color-modern: #008080;        /* Moderní dějiny (Teal) */
+    --color-modern: #d4af37;        /* Moderní dějiny (Zlatavá) */
 
      /* Dynamické barvy pro rámečky - Nový svět */
     --color-las-casas: #dc2626; /* red-700 */
@@ -38,6 +38,9 @@
     --color-egypt-tile: #ca8a04; /* amber-600 */
     --color-egypt-tomb: #ca8a04; /* Stejná jako dlaždice */
     --color-egypt-hieroglyphs: #06b6d4; /* cyan-600 - Nová barva pro odlišení */
+    --color-egypt-exhibition: #059669; /* emerald-600 - Zelená připomínající Nil */
+    --color-egypt-pyramid: #a855f7; /* violet-500 - Fialová pro pyramidu */
+    --color-egypt-complex: #f97316; /* orange-500 - Pro pohřební komplex */
 
     /* Barva pro Řím */
     --color-rome-tile: #dc2626; /* red-600 */
@@ -51,6 +54,36 @@
     --color-mesopotamia-tile: #059669; /* emerald-600 */
 
 }
+
+.border-t-egypt-exhibition { border-top-color: var(--color-egypt-exhibition); }
+.border-t-egypt-pyramid { border-top-color: var(--color-egypt-pyramid); }
+.border-t-egypt-complex { border-top-color: var(--color-egypt-complex); }
+
+.youtube-play-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.75rem;
+    color: #1f2937; /* slate-800 */
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 12px 30px rgba(17, 24, 39, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+}
+
+.youtube-thumbnail-wrapper:hover .youtube-play-button {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 16px 36px rgba(17, 24, 39, 0.45);
+}
+
+.youtube-play-button--complex { background-color: var(--color-egypt-complex); color: #ffffff; }
+.youtube-play-button--pyramid { background-color: var(--color-egypt-pyramid); color: #ffffff; }
+.youtube-play-button--punic { background-color: var(--color-punic-wars); color: #ffffff; }
 
 body {
     font-family: var(--font-body);

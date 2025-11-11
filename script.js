@@ -1,3 +1,63 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    const submitBtn = document.getElementById('submit-button');
+    const submitText = document.getElementById('submit-text');
+    const submitSpinner = document.getElementById('submit-spinner');
+    const messageEl = document.getElementById('form-message');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        messageEl.textContent = '';
+        messageEl.className = 'mt-4 text-sm text-center';
+        submitSpinner.classList.remove('hidden');
+        submitText.textContent = 'Odesílám…';
+        submitBtn.disabled = true;
+
+        try {
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: { 'Accept': 'application/json' },
+                body: formData
+            });
+
+            if (response.ok) {
+                form.reset();
+                messageEl.textContent = 'Děkujeme! Ozveme se co nejdříve.';
+                messageEl.className = 'mt-4 text-sm text-center text-emerald-600';
+                setTimeout(() => {
+                    closeModal('contact-modal');
+                    messageEl.textContent = '';
+                    messageEl.className = 'mt-4 text-sm text-center';
+                }, 2500);
+            } else {
+                let errorDetails = 'Formspree response not OK';
+                try {
+                    const data = await response.json();
+                    if (data && data.error) {
+                        errorDetails = data.error;
+                    } else if (Array.isArray(data) && data[0] && data[0].message) {
+                        errorDetails = data[0].message;
+                    }
+                } catch (_) {
+                    // ignore JSON parse errors
+                }
+                throw new Error(`${response.status} ${response.statusText}: ${errorDetails}`);
+            }
+        } catch (error) {
+            console.error('Contact form submission failed:', error);
+            messageEl.textContent = `Odeslání se nezdařilo. ${error.message || 'Zkuste to prosím znovu.'}`;
+            messageEl.className = 'mt-4 text-sm text-center text-red-600';
+        } finally {
+            submitSpinner.classList.add('hidden');
+            submitText.textContent = 'Odeslat zprávu';
+            submitBtn.disabled = false;
+        }
+    });
+});
 // Uchovává aktuální zobrazenou sekci
 let currentActiveSection = 'home';
 let currentActiveSubsection = null;
@@ -11,7 +71,7 @@ const AVAILABLE_SECTIONS = ['home', 'prehistory', 'antiquity', 'medieval', 'earl
 
 // Slovník pro názvy (již není potřeba pro drobečky, ale může se hodit)
 const BREADCRUMB_NAMES = {
-    'home': 'Domů', 'prehistory': 'Pravěk', 'antiquity': 'Starověk', 'medieval': 'Středověk', 'earlymodern': 'Novověk', '19thcentury': '19. století', 'modern': 'Moderní doba',
+    'home': 'Domů', 'prehistory': 'Pravěk', 'antiquity': 'Starověk', 'medieval': 'Středověk', 'earlymodern': 'Novověk', '19thcentury': '19. století', 'modern': 'Moderní dloubak',
     'mesopotamia': 'Mezopotámie', 'egypt': 'Egypt', 'rim': 'Řím', 'greece': 'Řecko', 'renaissance': 'Renesance', 'boulevard': 'Bulvár', 'habsburg': 'Nástup Habsburků', 'newworld': 'Nový svět',
     'sumerove': 'Sumerové', 'babylon': 'Babylon', 'punskevalky': 'Punské války', 'kartago': 'Kartágo'
 };
@@ -539,9 +599,10 @@ function loadVideo(element, videoId) {
     const wrapper = element.parentElement; // Cílí na div se stylem
     wrapper.innerHTML = `
         <iframe class="absolute top-0 left-0 w-full h-full" 
-                src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
+                src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0" 
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen>
         </iframe>
     `;
@@ -662,25 +723,4 @@ window.onload = () => {
         });
     });
     
-     document.getElementById('contact-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const submitButton = document.getElementById('submit-button');
-        const submitText = document.getElementById('submit-text');
-        const spinner = document.getElementById('submit-spinner');
-        const formMessage = document.getElementById('form-message');
-
-        submitText.textContent = 'Odesílám...';
-        spinner.classList.remove('hidden');
-        submitButton.disabled = true;
-
-        await new Promise(resolve => setTimeout(resolve, 1500));
-
-        submitText.textContent = 'Odesláno!';
-        spinner.classList.add('hidden');
-        submitButton.disabled = false;
-        formMessage.className = 'mt-4 text-sm text-center text-green-600 font-bold';
-        formMessage.textContent = 'Děkujeme! Vaše zpráva byla odeslána (simulace).';
-
-        setTimeout(() => closeModal('contact-modal'), 3000);
-    });
 };
