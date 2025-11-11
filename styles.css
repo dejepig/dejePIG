@@ -54,6 +54,9 @@
 
 }
 
+.border-t-egypt-exhibition { border-top-color: var(--color-egypt-exhibition); }
+.border-t-egypt-pyramid { border-top-color: var(--color-egypt-pyramid); }
+
 body {
     font-family: var(--font-body);
     background-color: var(--color-bg-primary); 
