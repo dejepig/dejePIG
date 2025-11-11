@@ -40,6 +40,7 @@
     --color-egypt-hieroglyphs: #06b6d4; /* cyan-600 - Nová barva pro odlišení */
     --color-egypt-exhibition: #059669; /* emerald-600 - Zelená připomínající Nil */
     --color-egypt-pyramid: #a855f7; /* violet-500 - Fialová pro pyramidu */
+    --color-egypt-complex: #f97316; /* orange-500 - Pro pohřební komplex */
 
     /* Barva pro Řím */
     --color-rome-tile: #dc2626; /* red-600 */
@@ -56,6 +57,7 @@
 
 .border-t-egypt-exhibition { border-top-color: var(--color-egypt-exhibition); }
 .border-t-egypt-pyramid { border-top-color: var(--color-egypt-pyramid); }
+.border-t-egypt-complex { border-top-color: var(--color-egypt-complex); }
 
 body {
     font-family: var(--font-body);
