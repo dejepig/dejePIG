@@ -6,15 +6,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitText = document.getElementById('submit-text');
     const submitSpinner = document.getElementById('submit-spinner');
     const messageEl = document.getElementById('form-message');
+<<<<<<< Updated upstream
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
+=======
+    
+    // Nastavíme _next parametr pro redirect zpět na stránku
+    const nextInput = document.getElementById('contact-form-next');
+    if (nextInput) {
+        nextInput.value = window.location.href + '#contact-success';
+    }
+
+    form.addEventListener('submit', (event) => {
+        // NEPOUŽÍVÁME preventDefault - formulář se odešle standardně
+        // Formspree to zpracuje jako standardní POST a nevyžaduje reCAPTCHA
+        
+        // Zobrazíme loading stav
+>>>>>>> Stashed changes
         messageEl.textContent = '';
         messageEl.className = 'mt-4 text-sm text-center';
         submitSpinner.classList.remove('hidden');
         submitText.textContent = 'Odesílám…';
         submitBtn.disabled = true;
+<<<<<<< Updated upstream
 
         try {
             const formData = new FormData(form);
@@ -57,6 +73,45 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.disabled = false;
         }
     });
+=======
+        
+        // Formulář se odešle standardně a Formspree přesměruje na _next URL
+        // Po návratu na stránku zobrazíme úspěšnou zprávu
+    });
+    
+    // Zkontrolujeme, jestli jsme se vrátili z úspěšného odeslání
+    if (window.location.hash === '#contact-success') {
+        // Odstraníme hash z URL
+        history.replaceState(null, '', window.location.pathname);
+        
+        // Zobrazíme úspěšnou zprávu
+        const form = document.getElementById('contact-form');
+        if (form) {
+            form.reset();
+        }
+        
+        const messageEl = document.getElementById('form-message');
+        if (messageEl) {
+            messageEl.textContent = 'Děkujeme! Ozveme se co nejdříve.';
+            messageEl.className = 'mt-4 text-sm text-center text-emerald-600';
+        }
+        
+        // Otevřeme modální okno, pokud není otevřené
+        const modal = document.getElementById('contact-modal');
+        if (modal && modal.classList.contains('modal-hidden')) {
+            openModal('contact-modal');
+        }
+        
+        // Zavřeme modální okno po 2.5 sekundách
+        setTimeout(() => {
+            closeModal('contact-modal');
+            if (messageEl) {
+                messageEl.textContent = '';
+                messageEl.className = 'mt-4 text-sm text-center';
+            }
+        }, 2500);
+    }
+>>>>>>> Stashed changes
 });
 // Uchovává aktuální zobrazenou sekci
 let currentActiveSection = 'home';
